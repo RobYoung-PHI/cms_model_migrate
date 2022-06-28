@@ -9,8 +9,14 @@ function getParameterByName(name, url) {
 }
 
 async function fetchAsync () {
-  let response = await fetch('https://i70roqwrjj.execute-api.us-east-1.amazonaws.com/main/getgv?user_id='+getParameterByName("user_id"));
-  let data = await response.json();
+  let response = {}
+  try {
+    response = await fetch('https://i70roqwrjj.execute-api.us-east-1.amazonaws.com/main/getgv?user_id='+getParameterByName("user_id"));
+  } catch (err) {
+    response = err
+  }
+  // let data = await response.json();
+  let data = response
   return data;
 }
 
