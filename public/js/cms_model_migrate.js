@@ -11,7 +11,8 @@ function getParameterByName(name, url) {
 async function fetchAsync () {
   let response = {}
   try {
-    response = await fetch('https://i70roqwrjj.execute-api.us-east-1.amazonaws.com/main/getgv?user_id='+getParameterByName("user_id"));
+    response = await fetch('https://i70roqwrjj.execute-api.us-east-1.amazonaws.com/main/getgv?user_id='+getParameterByName("user_id"), { mode: 'cors', headers: { 'x-api-key': 'ihl9Ec68TX4asxR619oHaBbC1YaBAiu3Lnd5Rh63', 'Accept': '*/*' } } )
+    //    , { mode: 'cors', headers: { 'x-api-key': '5485748746547e847483983343433243', 'User-Agent' : 'My-App', 'Accept': '*/*'}}
   } catch (err) {
     response = err
   }
