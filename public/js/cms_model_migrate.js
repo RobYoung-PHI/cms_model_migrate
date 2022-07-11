@@ -12,7 +12,7 @@ function getParameterByName(name, url) {
 //    , { mode: 'cors', headers: { 'x-api-key': '5485748746547e847483983343433243', 'User-Agent' : 'My-App', 'Accept': '*/*'}}
 
 async function fetchAsync () {
-  let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), 
+  let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
         method: 'GET',
         headers: {
             'X-API-KEY': 'MxomFM7F8N74wG5Sqkp397eeJkdNXHGTbhZihhxa',
