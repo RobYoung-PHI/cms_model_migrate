@@ -1,3 +1,4 @@
+
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -8,9 +9,6 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-// response = await fetch('https://i70roqwrjj.execute-api.us-east-1.amazonaws.com/main/getgv?user_id='+getParameterByName("user_id"), { mode: 'cors', headers: { 'x-api-key': 'ihl9Ec68TX4asxR619oHaBbC1YaBAiu3Lnd5Rh63', 'Access-Control-Allow-Origin': '*', 'Accept': '*/*' } } )
-//    , { mode: 'cors', headers: { 'x-api-key': '5485748746547e847483983343433243', 'User-Agent' : 'My-App', 'Accept': '*/*'}}
-
 async function fetchAsync () {
   let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
         method: 'GET',
@@ -19,19 +17,66 @@ async function fetchAsync () {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        //body: JSON.stringify(callData)
     });
   let data = await response.json();
   return data;
 }
 
+async function postAsync (payload) {
+  let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
+        method: 'POST',
+        headers: {
+            'X-API-KEY': 'MxomFM7F8N74wG5Sqkp397eeJkdNXHGTbhZihhxa',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify(payload)
+    });
+  let data = await response.json();
+  return data;
+}
+
+const converter = new showdown.Converter();
+
 fetchAsync()
     .then(
       data => {
-        for (let i = 0; i < data.Items.length; i++) {
-          console.log(data.Items[i])
-          //document.getElementById("tile"+(i+1)).src = 'img/Scrabble_Tile_'+data.Items[0].tileRack.charAt(i)+'.jpg'
-        }
+        document.getElementById('remain_count').innerHTML='Remaining: '.concat(data.Items.length-1)
+        element_ref = 1
+        document.getElementById('source_id').innerHTML=data.Items[element_ref]['source_id']
+        document.getElementById('source_title').innerHTML=('<h1><a href="https://app.contentful.com/spaces/srdmz6yont2x/environments/NewContentModel/entries/' + data.Items[element_ref]['source_id'] + '" target="_blank">' + data.Items[element_ref]['source_title'] + '</a></h1>')
+        document.getElementById('source_image_ref').src=data.Items[element_ref]['source_image_ref']
+        document.getElementById('source_body').innerHTML=converter.makeHtml(data.Items[element_ref]['source_body']);
+        document.getElementById('assoc_id').innerHTML=data.Items[element_ref]['assoc_id']
+        document.getElementById('assoc_title').innerHTML=('<h1><a href="https://app.contentful.com/spaces/srdmz6yont2x/environments/NewContentModel/entries/' + data.Items[element_ref]['source_id'] + '" target="_blank">' + data.Items[element_ref]['assoc_title'] + '</a></h1>')
+        document.getElementById('assoc_image_ref').src=data.Items[element_ref]['assoc_image_ref']
+        document.getElementById('assoc_body').innerHTML=converter.makeHtml(data.Items[element_ref]['assoc_body']);
+        document.getElementById('approve_btn').style.display = 'block'
+        document.getElementById('reject_btn').style.display = 'block'
       }
     )
     .catch(reason => console.log(reason.message))
+
+async function post_resp(response_string) {
+  document.getElementById('approve_btn').style.display = 'none';
+  document.getElementById('reject_btn').style.display = 'none';
+  document.getElementById('source_title').style.display = 'none';
+  document.getElementById('source_image_ref').style.display = 'none';
+  document.getElementById('source_body').style.display = 'none';
+  document.getElementById('assoc_title').style.display = 'none';
+  document.getElementById('assoc_image_ref').style.display = 'none';
+  document.getElementById('assoc_body').style.display = 'none';
+  document.getElementById('remain_count').innerHTML='Loading...'
+
+
+  let response = {}
+  payload = { 'uid': getParameterByName("uid"), 'source_id': document.getElementById('source_id').innerHTML, 'assoc_id':document.getElementById('assoc_id').innerHTML, 'status': response_string};
+  response = await postAsync(payload)
+  .then( () => {
+    console.log(response);
+  })
+  await new Promise(r => setTimeout(r, 5000))
+  .then(
+    location.reload()
+  )
+}

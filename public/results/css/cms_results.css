@@ -1,0 +1,15 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: center;
+}
+
+* {
+ font-family: Arial;
+}
+
+h1 {
+font-family: Arial, sans-serif;
+font-weight:bold;
+font-style:normal;
+}
