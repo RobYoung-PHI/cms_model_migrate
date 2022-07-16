@@ -73,11 +73,15 @@ async function fetchAsync () {
 fetchAsync()
     .then(
       data => {
-        let table = document.querySelector("table");
-        let tableData = JSON.parse(data['body']);
-        let tableKeys = Object.keys(tableData[0]);
-        generateTableHead(table, tableKeys);
-        generateTable(table, tableData);
+        if (JSON.parse(data['body']).length > 0) {
+          let table = document.querySelector("table");
+          let tableData = JSON.parse(data['body']);
+          let tableKeys = Object.keys(tableData[0]);
+          generateTableHead(table, tableKeys);
+          generateTable(table, tableData);
+        } else {
+          document.getElementById('result_status').innerHTML='No results available yet.'
+        }
       }
     )
     .catch(reason => console.log(reason.message))
