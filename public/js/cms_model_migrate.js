@@ -45,11 +45,9 @@ fetchAsync()
         element_ref = 1
         document.getElementById('source_id').innerHTML=data.Items[element_ref]['source_id']
         document.getElementById('source_title').innerHTML=('<h1><a href="https://app.contentful.com/spaces/srdmz6yont2x/environments/NewContentModel/entries/' + data.Items[element_ref]['source_id'] + '" target="_blank">' + data.Items[element_ref]['source_title'] + '</a></h1>')
-        document.getElementById('source_image_ref').src=data.Items[element_ref]['source_image_ref']
         document.getElementById('source_body').innerHTML=converter.makeHtml(data.Items[element_ref]['source_body']);
         document.getElementById('assoc_id').innerHTML=data.Items[element_ref]['assoc_id']
         document.getElementById('assoc_title').innerHTML=('<h1><a href="https://app.contentful.com/spaces/srdmz6yont2x/environments/NewContentModel/entries/' + data.Items[element_ref]['source_id'] + '" target="_blank">' + data.Items[element_ref]['assoc_title'] + '</a></h1>')
-        document.getElementById('assoc_image_ref').src=data.Items[element_ref]['assoc_image_ref']
         document.getElementById('assoc_body').innerHTML=converter.makeHtml(data.Items[element_ref]['assoc_body']);
         document.getElementById('approve_btn').style.display = 'block'
         document.getElementById('reject_btn').style.display = 'block'
@@ -61,10 +59,8 @@ async function post_resp(response_string) {
   document.getElementById('approve_btn').style.display = 'none';
   document.getElementById('reject_btn').style.display = 'none';
   document.getElementById('source_title').style.display = 'none';
-  document.getElementById('source_image_ref').style.display = 'none';
   document.getElementById('source_body').style.display = 'none';
   document.getElementById('assoc_title').style.display = 'none';
-  document.getElementById('assoc_image_ref').style.display = 'none';
   document.getElementById('assoc_body').style.display = 'none';
   document.getElementById('remain_count').innerHTML='Loading...'
 
