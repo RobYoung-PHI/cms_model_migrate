@@ -11,7 +11,7 @@ function getParameterByName(name, url) {
 
 async function fetchAsync () {
   aid = getParameterByName("aid")
-  if (typeof(aid)=='undefined') {
+  if (typeof(aid)===null) {
     console.log("aid reference not supplied")
     console.log(aid)
   } else {
@@ -32,7 +32,7 @@ async function fetchAsync () {
 
 async function postAsync (payload) {
   aid = getParameterByName("aid")
-  if (typeof(aid)=='undefined') {
+  if (typeof(aid)===null) {
     console.log("aid reference not supplied")
     console.log(aid)
   } else {
