@@ -10,6 +10,14 @@ function getParameterByName(name, url) {
 }
 
 async function fetchAsync () {
+  aid = getParameterByName("aid")
+  if (typeof(aid)=='undefined') {
+    console.log("aid reference not supplied")
+    console.log(aid)
+  } else {
+    console.log("aid reference is:")
+    console.log(aid)
+  }
   let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
         method: 'GET',
         headers: {
@@ -23,6 +31,14 @@ async function fetchAsync () {
 }
 
 async function postAsync (payload) {
+  aid = getParameterByName("aid")
+  if (typeof(aid)=='undefined') {
+    console.log("aid reference not supplied")
+    console.log(aid)
+  } else {
+    console.log("aid reference is:")
+    console.log(aid)
+  }
   let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
         method: 'POST',
         headers: {
