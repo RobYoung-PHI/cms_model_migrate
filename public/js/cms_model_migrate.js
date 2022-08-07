@@ -35,8 +35,6 @@ async function fetchAsync () {
 async function postAsync (payload) {
   aid = getParameterByName("aid")
   if (aid===null) {
-    console.log("aid reference not supplied")
-    console.log(aid)
     let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
           method: 'POST',
           headers: {'X-API-KEY': 'MxomFM7F8N74wG5Sqkp397eeJkdNXHGTbhZihhxa', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
@@ -45,8 +43,6 @@ async function postAsync (payload) {
     let data = await response.json();
     return data;
   } else {
-    console.log("aid reference is:")
-    console.log(aid)
     let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid")+'/'+aid, {
           method: 'POST',
           headers: {'X-API-KEY': 'MxomFM7F8N74wG5Sqkp397eeJkdNXHGTbhZihhxa', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
@@ -87,7 +83,12 @@ async function post_resp(response_string) {
 
 
   let response = {}
-  payload = { 'uid': getParameterByName("uid"), 'source_id': document.getElementById('source_id').innerHTML, 'assoc_id':document.getElementById('assoc_id').innerHTML, 'status': response_string};
+  aid = getParameterByName("aid")
+  if (aid===null) {
+    payload = { 'uid': getParameterByName("uid"), 'source_id': document.getElementById('source_id').innerHTML, 'assoc_id':document.getElementById('assoc_id').innerHTML, 'status': response_string};
+  } else {
+    payload = { 'uid': getParameterByName("uid"), 'aid': aid, 'source_id': document.getElementById('source_id').innerHTML, 'assoc_id':document.getElementById('assoc_id').innerHTML, 'status': response_string};
+  }
   response = await postAsync(payload)
   .then( () => {
     console.log(response);
