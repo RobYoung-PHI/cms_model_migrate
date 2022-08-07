@@ -5,10 +5,18 @@ from boto3.dynamodb.conditions import Key
 def lambda_handler(event, context):
     dynamodb = boto3.resource('dynamodb')
 
+    try:
+        assessid = '_' + str(event['pathParameters']['assessid'])
+    except Exception:
+        assessid = ''
+
+    userid = str(event['pathParameters']['userid'])
+    userassessid = userid + assessid
+
     table = dynamodb.Table('analytics_cms_check_ids')
     response = table.query(
         IndexName='user_id-index',
-        KeyConditionExpression=Key('user_id').eq(str(event['pathParameters']['userid']))
+        KeyConditionExpression=Key('user_id').eq(userid)
     )
     check_items = response['Items']
     check_items_key = {}
@@ -16,7 +24,7 @@ def lambda_handler(event, context):
     table = dynamodb.Table('analytics_cms_check_results')
     response = table.query(
         IndexName='user_id-index',
-        KeyConditionExpression=Key('user_id').eq(str(event['pathParameters']['userid']))
+        KeyConditionExpression=Key('user_id').eq(userassessid)
     )
     result_items = response['Items']
     result_items_key = {}
