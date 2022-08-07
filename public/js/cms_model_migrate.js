@@ -12,8 +12,6 @@ function getParameterByName(name, url) {
 async function fetchAsync () {
   aid = getParameterByName("aid")
   if (aid===null) {
-    console.log("aid reference not supplied")
-    console.log(aid)
     let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid"), {
           method: 'GET',
           headers: {'X-API-KEY': 'MxomFM7F8N74wG5Sqkp397eeJkdNXHGTbhZihhxa', 'Accept': 'application/json','Content-Type': 'application/json'}
@@ -21,8 +19,6 @@ async function fetchAsync () {
     let data = await response.json();
     return data;
   } else {
-    console.log("aid reference is:")
-    console.log(aid)
     let response = await fetch('https://z0kb9cr2ed.execute-api.us-east-1.amazonaws.com/main/modelcheck/'+getParameterByName("uid")+'/'+aid, {
           method: 'GET',
           headers: {'X-API-KEY': 'MxomFM7F8N74wG5Sqkp397eeJkdNXHGTbhZihhxa', 'Accept': 'application/json','Content-Type': 'application/json'}
