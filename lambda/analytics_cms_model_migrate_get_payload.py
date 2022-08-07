@@ -42,7 +42,9 @@ def lambda_handler(event, context):
     return_data = {}
     return_data['Items'] = [{}]
     for key, element in check_items_key.items():
-        if key not in result_items_key.keys():
+        if len(assessid) > 0:
+            assess_key = key + assessid
+        if assess_key not in result_items_key.keys():
             return_data['Items'].append(check_items_key[key])
 
     return {
