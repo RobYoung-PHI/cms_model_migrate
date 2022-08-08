@@ -8,9 +8,14 @@ def lambda_handler(event, context):
     dynamodb = boto3.resource('dynamodb')
     dynamo_table = dynamodb.Table('analytics_cms_check_results')
 
+    try:
+        aid = '_' + str(event['aid'])
+    except Exception:
+        aid = ''
+
     item = {}
-    item_hash = str(event['source_id']) + '_' + str(event['assoc_id']) + '_' + str(event['uid'])
-    item['user_id'] = str(event['uid'])
+    item_hash = str(event['source_id']) + '_' + str(event['assoc_id']) + '_' + str(event['uid']) + str(aid)
+    item['user_id'] = str(event['uid']) + str(aid)
     item['check_id'] = item_hash
     item['assoc_id'] = str(event['assoc_id'])
     item['source_id'] = str(event['source_id'])
