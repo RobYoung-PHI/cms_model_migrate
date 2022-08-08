@@ -14,7 +14,7 @@ function generateTableHead(table, data) {
 }
 
 function generateTable(table, data) {
-  let matchkeys = ['updated_at', 'user_id', 'source_id', 'assoc_id', 'status']
+  let matchkeys = ['updated_at', 'user_id', 'assess_id', 'source_id', 'assoc_id', 'status']
   for (let element of data) {
     let row = table.insertRow();
     for (key in element) {
