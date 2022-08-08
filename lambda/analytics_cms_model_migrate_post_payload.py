@@ -21,6 +21,10 @@ def lambda_handler(event, context):
     item['source_id'] = str(event['source_id'])
     item['status'] = str(event['status'])
     item['updated_at'] = datetime.datetime.now().strftime("%Y-%m-%d"+"T"+"%H:%M:%S.%f"+"Z")
+    if len(aid)>0:
+        item['assess_id'] = str(event['aid'])
+    else:
+        item['assess_id'] = str(event['uid'])
 
     try:
         dynamo_table.put_item(Item=item, ConditionExpression='attribute_not_exists(itemhash)')
