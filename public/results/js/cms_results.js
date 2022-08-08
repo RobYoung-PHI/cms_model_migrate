@@ -2,7 +2,7 @@
 function generateTableHead(table, data) {
   let thead = table.createTHead();
   let row = thead.insertRow();
-  let matchkeys = ['updated_at', 'user_id', 'source_id', 'assoc_id', 'status']
+  let matchkeys = ['updated_at', 'user_id', 'assess_id', 'source_id', 'assoc_id', 'status']
   for (let key of data) {
     if (matchkeys.includes(key)) {
       let th = document.createElement('th');
